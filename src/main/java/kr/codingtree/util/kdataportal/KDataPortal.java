@@ -16,6 +16,12 @@ public class KDataPortal {
     public final String BUS_LOCATION_INFO_SERVICE_URL = "http://apis.data.go.kr/1613000/BusLcInfoInqireService/getRouteAcctoBusLcList";
     public final String BUS_ARRIVAL_INFO_SERVICE_URL = "http://apis.data.go.kr/1613000/ArvlInfoInqireService/getSttnAcctoArvlPrearngeInfoList";
 
+    public String test() {
+        URLBuilder builder = new URLBuilder("http://apis.data.go.kr/1613000/BusSttnInfoInqireService/getCtyCodeList");
+        builder.append("serviceKey", DataPortalKey.USER_KEY).append("_type", "json");
+
+        return getData(builder);
+    }
 
     public String getSttnInfo(double gpsLati, double gpsLong) {
         URLBuilder builder = new URLBuilder(BUS_STTN_INFO_SERVICE_URL);
@@ -36,6 +42,7 @@ public class KDataPortal {
 
         return getData(builder);
     }
+
     public String getLocationInfo() {
         URLBuilder builder = new URLBuilder(BUS_LOCATION_INFO_SERVICE_URL);
         builder.append("serviceKey", DataPortalKey.USER_KEY).append("_type", "json")
@@ -46,6 +53,7 @@ public class KDataPortal {
 
         return getData(builder);
     }
+
     public String getArrivalInfo() {
         URLBuilder builder = new URLBuilder(BUS_ARRIVAL_INFO_SERVICE_URL);
         builder.append("serviceKey", DataPortalKey.USER_KEY).append("_type", "json")
@@ -59,6 +67,7 @@ public class KDataPortal {
 
     @SneakyThrows
     private String getData(URLBuilder builder) {
+        System.out.println(builder.toURL().toString());
         HttpURLConnection connection = (HttpURLConnection) builder.toURL().openConnection();
         connection.setRequestMethod("GET");
         connection.setRequestProperty("Content-type", "application/json");

@@ -3,7 +3,7 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
-src/main/java/kr/codingtree/util/kdataportal/DataPortalKey.java
+src/main/java/kr/codingtree/kdataportal/key/DataPortalKey.java
 
 ### IntelliJ IDEA ###
 .idea/modules.xml

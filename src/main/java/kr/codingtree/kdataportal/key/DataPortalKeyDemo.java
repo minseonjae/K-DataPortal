@@ -1,4 +1,4 @@
-package kr.codingtree.util.kdataportal;
+package kr.codingtree.kdataportal.key;
 
 import lombok.experimental.UtilityClass;
 

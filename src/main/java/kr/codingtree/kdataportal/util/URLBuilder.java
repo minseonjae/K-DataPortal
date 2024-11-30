@@ -1,4 +1,4 @@
-package kr.codingtree.util;
+package kr.codingtree.kdataportal.util;
 
 import lombok.SneakyThrows;
 

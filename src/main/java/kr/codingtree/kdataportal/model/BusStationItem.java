@@ -2,9 +2,11 @@ package kr.codingtree.kdataportal.model;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
+import lombok.ToString;
 
 @Getter
-public class StationItem {
+@ToString
+public class BusStationItem {
 
     @SerializedName("citycode")
     private int cityCode;

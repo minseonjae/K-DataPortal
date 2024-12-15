@@ -2,14 +2,16 @@ package kr.codingtree.kdataportal.model;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
+import lombok.ToString;
 
 import java.util.List;
 
 @Getter
-public class NearbyStationsResponse {
+@ToString
+public class NearbyBusStationsResponse {
 
     @SerializedName("items")
-    private StationItems items;
+    private BusStationItems items;
 
     @SerializedName("numOfRows")
     private int numOfRows;
@@ -21,10 +23,11 @@ public class NearbyStationsResponse {
     private int totalCount;
 
     @Getter
-    public static class StationItems {
+    @ToString
+    public static class BusStationItems {
 
         @SerializedName("item")
-        private List<StationItem> itemList;
+        private List<BusStationItem> list;
 
     }
 

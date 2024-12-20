@@ -2,7 +2,7 @@ plugins {
     id 'java'
 }
 
-group = 'kr.codingtree.util'
+group = 'kr.codingtree.kdataportal'
 version = '0.0.1'
 
 repositories {

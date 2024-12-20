@@ -1,5 +1,8 @@
 package kr.codingtree.kdataportal.data;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import kr.codingtree.kdataportal.KDataPortal;
 import kr.codingtree.kdataportal.util.URLBuilder;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
@@ -19,12 +22,15 @@ public class DataFetcher {
 
     @SneakyThrows
     public String fetchData(URLBuilder builder) {
-        System.out.println(builder.toURL().toString());
         return fetchData(builder.toURL());
     }
 
     @SneakyThrows
     public String fetchData(URL url) {
+        if (KDataPortal.isDebugMode()) {
+            System.out.println("Debug fetchData URL  :  " + url.toString());
+        }
+
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
         connection.setRequestProperty("Content-type", "application/json");
@@ -33,8 +39,18 @@ public class DataFetcher {
 
         if(connection.getResponseCode() >= 200 && connection.getResponseCode() <= 300) {
             rd = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+
+            if (KDataPortal.isDebugMode()) {
+                System.out.println("Debug fetchData InputStream");
+            }
+
         } else {
             rd = new BufferedReader(new InputStreamReader(connection.getErrorStream()));
+
+            if (KDataPortal.isDebugMode()) {
+                System.out.println("Debug fetchData ErrorStream");
+            }
+
         }
 
         StringBuilder sb = new StringBuilder();
@@ -46,6 +62,10 @@ public class DataFetcher {
 
         rd.close();
         connection.disconnect();
+
+        if (KDataPortal.isDebugMode()) {
+            System.out.println("Debug fetchData JSON to String : " + sb.toString());
+        }
 
         return sb.toString();
     }

@@ -8,6 +8,7 @@ import kr.codingtree.kdataportal.data.DataFetcher;
 import kr.codingtree.kdataportal.key.DataPortalKey;
 import kr.codingtree.kdataportal.model.BusArrivalInfoResponse;
 import kr.codingtree.kdataportal.model.BusRouteInfoResponse;
+import kr.codingtree.kdataportal.model.BusRouteLocationsResponse;
 import kr.codingtree.kdataportal.model.NearbyBusStationsResponse;
 import kr.codingtree.kdataportal.util.URLBuilder;
 
@@ -35,7 +36,13 @@ public class BusService {
                                     .getAsJsonObject("response")
                                     .getAsJsonObject("body");
 
-        return new Gson().fromJson(result, NearbyBusStationsResponse.class);
+        NearbyBusStationsResponse response = new Gson().fromJson(result, NearbyBusStationsResponse.class);
+
+        if (KDataPortal.isDebugMode()) {
+            System.out.println(response);
+        }
+
+        return response;
     }
 
     /**
@@ -60,7 +67,13 @@ public class BusService {
                                     .getAsJsonObject("response")
                                     .getAsJsonObject("body");
 
-        return new Gson().fromJson(result, BusArrivalInfoResponse.class);
+        BusArrivalInfoResponse response = new Gson().fromJson(result, BusArrivalInfoResponse.class);
+
+        if (KDataPortal.isDebugMode()) {
+            System.out.println(response);
+        }
+
+        return response;
     }
 
     /**
@@ -87,7 +100,13 @@ public class BusService {
                                     .getAsJsonObject("response")
                                     .getAsJsonObject("body");
 
-        return new Gson().fromJson(result, BusArrivalInfoResponse.class);
+        BusArrivalInfoResponse response = new Gson().fromJson(result, BusArrivalInfoResponse.class);
+
+        if (KDataPortal.isDebugMode()) {
+            System.out.println(response);
+        }
+
+        return response;
     }
 
     /**
@@ -111,6 +130,42 @@ public class BusService {
                                     .getAsJsonObject("items")
                                     .getAsJsonObject("item");
 
-        return new Gson().fromJson(result, BusRouteInfoResponse.class);
+        BusRouteInfoResponse response = new Gson().fromJson(result, BusRouteInfoResponse.class);
+
+        if (KDataPortal.isDebugMode()) {
+            System.out.println(response);
+        }
+
+        return response;
+    }
+
+    /** 특정 노선의 버스 위치 정보를 조회합니다.
+     *
+     * @param pageNo 조회할 페이지 번호
+     * @param numOfRows 한 페이지에 포함될 데이터 수
+     * @param cityCode 조회할 도시의 코드
+     * @param routeId 조회할 버스 노선 ID
+     * @return BusRouteLocationsResponse 버스 위치 정보를 담은 응답 객체
+     */
+    public BusRouteLocationsResponse getBusRouteLocations(int pageNo, int numOfRows, int cityCode, String routeId) {
+        URLBuilder builder = new URLBuilder(KDataPortal.BUS_LOCATION_INFO_SERVICE_URL);
+        builder.append("serviceKey", DataPortalKey.USER_KEY).append("_type", "json")
+                .append("pageNo", String.valueOf(pageNo))         // 페이지 번호
+                .append("numOfRows", String.valueOf(numOfRows))   // 한 페이지 결과 수
+                .append("cityCode", String.valueOf(cityCode))     // 도시 코드
+                .append("routeId", String.valueOf(routeId));      // 노선 ID
+
+        JsonElement result = JsonParser.parseString(DataFetcher.fetchData(builder))
+                .getAsJsonObject()
+                .getAsJsonObject("response")
+                .getAsJsonObject("body");
+
+        BusRouteLocationsResponse response = new Gson().fromJson(result, BusRouteLocationsResponse.class);
+
+        if (KDataPortal.isDebugMode()) {
+            System.out.println(response);
+        }
+
+        return response;
     }
 }
